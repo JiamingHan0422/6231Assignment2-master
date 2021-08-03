@@ -4,7 +4,7 @@ package Replication;
  Represents a single message, and handles the details of
  the made-up protocol that we are using.
 
- @author Tom Austin
+
  */
 public class Message
 {

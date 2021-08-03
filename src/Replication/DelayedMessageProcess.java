@@ -4,7 +4,7 @@ package Replication;
  This class represents a process where a message is delayed.
  We use this to illustrate how other classes will respond.
 
- @author Tom Austin
+
  */
 public class DelayedMessageProcess extends ReliableBroadcastProcess
 {

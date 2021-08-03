@@ -7,7 +7,7 @@ import java.util.List;
  This class uses the FIFO properties of the parent class to check
  for missing messages.
 
- @author Tom Austin
+
  */
 public class RecoveringFifoBP extends FifoBroadcastProcess
 {
