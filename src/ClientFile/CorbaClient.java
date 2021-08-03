@@ -1,8 +1,8 @@
 package ClientFile;
 
-import ServerModule.Creator;
-import ServerModule.CreatorHelper;
 import ManagerFile.Manager;
+import frontEndModule.frontEnd;
+import frontEndModule.frontEndHelper;
 import org.omg.CORBA.ORB;
 import org.omg.CORBA.ORBPackage.InvalidName;
 import org.omg.CosNaming.NamingContextExt;
@@ -25,7 +25,7 @@ import java.util.Scanner;
  */
 public class CorbaClient {
 
-    private Creator creator;
+    private frontEnd frontend;
     private BufferedReader reader;
     private ORB orb;
     private org.omg.CORBA.Object objRef;
@@ -79,19 +79,19 @@ public class CorbaClient {
                 ManagerValid = true;
                 String name = "MTL";
                 //通过ORB拿到server实例化好的Creator类
-                creator = CreatorHelper.narrow(ncRef.resolve_str(name));
+                frontend = frontEndHelper.narrow(ncRef.resolve_str(name));
 
             } else if (ManagerID.startsWith("LVL")) {
                 ManagerValid = true;
                 String name = "LVL";
                 //通过ORB拿到server实例化好的Creator类
-                creator = CreatorHelper.narrow(ncRef.resolve_str(name));
+                frontend = frontEndHelper.narrow(ncRef.resolve_str(name));
 
             } else if (ManagerID.startsWith("DDO")) {
                 ManagerValid = true;
                 String name = "DDO";
                 //通过ORB拿到server实例化好的Creator类
-                creator = CreatorHelper.narrow(ncRef.resolve_str(name));
+                frontend = frontEndHelper.narrow(ncRef.resolve_str(name));
 
             }else{
                 System.out.println("ManagerID is invalid, please try again.");
@@ -142,7 +142,7 @@ public class CorbaClient {
                                 location = ManagerScanner.next();
                             }
 
-                            boolean result = creator.createTRecord(ManagerID, firstName, lastName, address, phone, specialization, location);
+                            boolean result = frontend.createTRecord(ManagerID, firstName, lastName, address, phone, specialization, location);
                             if (result) {
                                 System.out.println("success!");
 
@@ -177,7 +177,7 @@ public class CorbaClient {
                             firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1);
                             lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1);
 
-                            result = creator.createSRecord(ManagerID, firstName, lastName, CoursesRegister, Status, StatusDate);
+                            result = frontend.createSRecord(ManagerID, firstName, lastName, CoursesRegister, Status, StatusDate);
                             if (result) {
                                 System.out.println("success!");
 
@@ -198,7 +198,7 @@ public class CorbaClient {
                         // get record count
                         case 3:
 
-                            System.out.println(creator.getRecordCounts());
+                            System.out.println(frontend.getRecordCounts());
                             break;
 
                         //edit record
@@ -217,7 +217,7 @@ public class CorbaClient {
                             String fieldName = ManagerScanner.next();
                             String newValue = ManagerScanner.next();
 
-                            result = creator.editRecord(ManagerID, RecordID, fieldName, newValue);
+                            result = frontend.editRecord(ManagerID, RecordID, fieldName, newValue);
                             if (result) {
                                 System.out.println("success!");
                                 String writeInLog = "Edit Record." + "\n" +
@@ -241,7 +241,7 @@ public class CorbaClient {
                             System.out.println("Please input the remoteCenterServer which you want to transfer.");
                             String remoteCenterServer = ManagerScanner.next();
 
-                            result = creator.transferRecord(ManagerID, recordID, remoteCenterServer);
+                            result = frontend.transferRecord(ManagerID, recordID, remoteCenterServer);
 
                             if (result) {
                                 System.out.println("success!");
@@ -258,7 +258,7 @@ public class CorbaClient {
 
                         // print record
                         case 6:
-                            result = creator.printRecord(ManagerID);
+                            result = frontend.printRecord(ManagerID);
                             if (result) {
                                 System.out.println("success!");
 
